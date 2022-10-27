@@ -3,7 +3,7 @@ import ExpenseItem from "./Components/Expenses/ExpenseItem";
 import NewExpense from "./Components/NewExpense/NewExpense";
 import ExpensesFilter from "./Components/NewExpense/ExpensesFilter";
 import Card from "./Components/UI/Card";
-import './Components/Expenses/Expenses.css';
+import "./Components/Expenses/Expenses.css";
 const initialdata = [
   {
     id: "e1",
@@ -43,21 +43,21 @@ const App = (props) => {
   const [filteredYear, setFilteredYear] = useState("2020");
   const filterChangeHandler = (selectedyear) => {
     setFilteredYear(selectedyear);
-    
   };
-  const expensefiltered=expenses.filter((expense) =>{
-    return  expense.date.getFullYear().toString()===filteredYear;
-  }
-  )
+  const expensefiltered = expenses.filter((expense) => {
+    return expense.date.getFullYear().toString() === filteredYear;
+  });
 
   return (
     <div>
       <NewExpense onAddExpense={addExpenseHandler} />
-      <Card className='expenses'>
+      <Card className="expenses">
         <ExpensesFilter
           selected={filteredYear}
           onChangeFilter={filterChangeHandler}
         />
+        {expensefiltered.length === 0 && <p>no expenses to show</p>}
+
         {expensefiltered.map((expenses) => {
           return (
             <ExpenseItem
@@ -68,8 +68,11 @@ const App = (props) => {
             ></ExpenseItem>
           );
         })}
-        </Card>
-      </div>
+        {expensefiltered.length === 1 && (
+          <p>Only single Expense here. Please add more...</p>
+        )}
+      </Card>
+    </div>
   );
 };
 
