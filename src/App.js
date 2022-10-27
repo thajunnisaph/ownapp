@@ -4,6 +4,7 @@ import NewExpense from "./Components/NewExpense/NewExpense";
 import ExpensesFilter from "./Components/NewExpense/ExpensesFilter";
 import Card from "./Components/UI/Card";
 import "./Components/Expenses/Expenses.css";
+import "./Components/NewExpense/ExpenseList.css";
 const initialdata = [
   {
     id: "e1",
@@ -56,21 +57,28 @@ const App = (props) => {
           selected={filteredYear}
           onChangeFilter={filterChangeHandler}
         />
-        {expensefiltered.length === 0 && <p>no expenses to show</p>}
+        <ul className="expenses-list">
+          {expensefiltered.length === 0 && (
+            <p className="expenses-list__fallback">no expenses to show</p>
+          )}
 
-        {expensefiltered.map((expenses) => {
-          return (
-            <ExpenseItem
-              key={expenses.id}
-              title={expenses.title}
-              amount={expenses.amount}
-              date={expenses.date}
-            ></ExpenseItem>
-          );
-        })}
-        {expensefiltered.length === 1 && (
-          <p>Only single Expense here. Please add more...</p>
-        )}
+          {expensefiltered.length > 0 &&
+            expensefiltered.map((expenses) => {
+              return (
+                <ExpenseItem
+                  key={expenses.id}
+                  title={expenses.title}
+                  amount={expenses.amount}
+                  date={expenses.date}
+                ></ExpenseItem>
+              );
+            })}
+          {expensefiltered.length === 1 && (
+            <p className="expenses-list__fallback">
+              Only single Expense here. Please add more...
+            </p>
+          )}
+        </ul>
       </Card>
     </div>
   );
